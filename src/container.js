@@ -6,6 +6,7 @@ export default function initContainer(dispatch, getState, view) {
 
     return function onStateUpdated() {
         const state = getState();
+
         view.modifier = state.modifier;
         view.currentGuess = state.currentGuess;
     };

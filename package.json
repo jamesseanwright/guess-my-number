@@ -4,7 +4,8 @@
   "description": "A binary search-based number guessing game. Uses Redux for state management",
   "main": "index.js",
   "scripts": {
-    "build": "rollup --config rollup.js src/index.js",
+    "dev": "mkdir -p dist && cp src/index.html dist && NODE_ENV=development rollup --config rollup.js --watch",
+    "build": "NODE_ENV=production rollup --config rollup.js src/index.js && cp src/index.html dist",
     "test": "mocha"
   },
   "repository": {
@@ -35,7 +36,9 @@
     "rollup": "0.36.3",
     "rollup-plugin-commonjs": "5.0.5",
     "rollup-plugin-node-resolve": "2.0.0",
+    "rollup-plugin-replace": "1.1.1",
     "rollup-plugin-uglify": "1.0.1",
+    "rollup-watch": "2.5.0",
     "sinon": "1.17.6",
     "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony"
   }
