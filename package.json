@@ -4,6 +4,7 @@
   "description": "A binary search-based number guessing game. Uses Redux for state management",
   "main": "index.js",
   "scripts": {
+    "build": "rollup --config rollup.js src/index.js",
     "test": "mocha"
   },
   "repository": {
@@ -32,6 +33,10 @@
     "chai": "3.5.0",
     "mocha": "3.1.2",
     "rollup": "0.36.3",
-    "sinon": "1.17.6"
+    "rollup-plugin-commonjs": "5.0.5",
+    "rollup-plugin-node-resolve": "2.0.0",
+    "rollup-plugin-uglify": "1.0.1",
+    "sinon": "1.17.6",
+    "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony"
   }
 }

@@ -1,4 +1,4 @@
-import { UPDATE_MIN, UPDATE_MAX } from 'actions';
+import { UPDATE_MIN, UPDATE_MAX } from './actions';
 
 const MIN_NUMBER = 0;
 const MAX_NUMBER = Number.MAX_SAFE_INTEGER;

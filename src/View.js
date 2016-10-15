@@ -1,14 +1,41 @@
 export default class View {
     constructor(rootViewSelector) {
-        this._init(rootViewSelector);
+        this._createBindings(rootViewSelector);
     }
 
-    _init(rootViewSelector) {
+    _createBindings(rootViewSelector) {
         const viewRoot = document.querySelector(rootViewSelector);
 
-        this.modifier = viewRoot.querySelector('.game-view__modifier');
-        this.currentGuess = viewRoot.querySelector('.game-view__current-guess');
-        this.yesButton = viewRoot.querySelector('.game-view__button--yes');
-        this.noButton = viewRoot.querySelector('.game-view__button--no');
+        this.bindings = new Map();
+        this.bindings.set('modifier', viewRoot.querySelector('.game-view__modifier'));
+        this.bindings.set('currentGuess', viewRoot.querySelector('.game-view__current-guess'));
+        this.bindings.set('yesButton', viewRoot.querySelector('.game-view__button--yes'));
+        this.bindings.set('noButton', viewRoot.querySelector('.game-view__button--no'));
+    }
+
+    _updateBinding(name, value) {
+        const element = this.bindings.get(name);
+        element.textContent = value;
+    }
+
+    _updateClickBinding(name, handler) {
+        const element = this.bindings.get(name);
+        element.onclick = handler;
+    }
+
+    set modifier(value) {
+        this._updateBinding('modifier', value);
+    }
+
+    set currentGuess(value) {
+        this._updateBinding('currentGuess', value);
+    }
+
+    set onYesClick(handler) {
+        this._updateClickBinding('yesButton', handler);
+    }
+
+    set onNoClick(handler) {
+        this._updateClickBinding('noButton', handler);
     }
 }
