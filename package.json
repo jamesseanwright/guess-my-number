@@ -1,0 +1,37 @@
+{
+  "name": "guess-my-number",
+  "version": "1.0.0",
+  "description": "A binary search-based number guessing game. Uses Redux for state management",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesseanwright/guess-my-number.git"
+  },
+  "keywords": [
+    "guess",
+    "number",
+    "binary",
+    "search",
+    "log",
+    "logarithm",
+    "redux"
+  ],
+  "author": "James Wright <james@jamesswright.co.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesseanwright/guess-my-number/issues"
+  },
+  "homepage": "https://github.com/jamesseanwright/guess-my-number#readme",
+  "dependencies": {
+    "redux": "3.6.0"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "mocha": "3.1.2",
+    "rollup": "0.36.3",
+    "sinon": "1.17.6"
+  }
+}
