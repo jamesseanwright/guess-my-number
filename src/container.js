@@ -8,10 +8,11 @@ export default function initContainer(dispatch, getState, view) {
     view.onNoClick = () => dispatch(respondToGuess(false));
 
     return function update() {
-        console.log(getState());
-        const { currentGuess } = getState();
+        console.log(JSON.stringify(getState(), null, 4));
+        const { currentGuess, guessesRemaining } = getState();
         const { number, isHigher } = currentGuess;
 
+        view.guessesRemaining = guessesRemaining;
         view.modifier = isHigher ? HIGHER_LABEL : LOWER_LABEL;
         view.currentGuess = number;
     };

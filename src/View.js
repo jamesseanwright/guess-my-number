@@ -7,6 +7,7 @@ export default class View {
         const viewRoot = document.querySelector(rootViewSelector);
 
         this.bindings = new Map();
+        this.bindings.set('guessesRemaining', viewRoot.querySelector('.game-view__guesses-remaining'));
         this.bindings.set('modifier', viewRoot.querySelector('.game-view__modifier'));
         this.bindings.set('currentGuess', viewRoot.querySelector('.game-view__current-guess'));
         this.bindings.set('yesButton', viewRoot.querySelector('.game-view__button--yes'));
@@ -29,6 +30,10 @@ export default class View {
 
     set currentGuess(value) {
         this._updateBinding('currentGuess', value);
+    }
+
+    set guessesRemaining(value) {
+        this._updateBinding('guessesRemaining', value);
     }
 
     set onYesClick(handler) {
