@@ -1,14 +1,8 @@
-export const UPDATE_MIN = 'UPDATE_MIN';
-export const UPDATE_MAX = 'UPDATE_MAX';
+export const RESPOND_TO_GUESS = 'RESPOND_TO_GUESS';
 
-export function updateMin() {
+export function respondToGuess(isGuessCorrect) {
     return {
-        type: UPDATE_MIN
-    };
-}
-
-export function updateMax() {
-    return {
-        type: UPDATE_MAX
+        type: RESPOND_TO_GUESS,
+        isGuessCorrect
     };
 }
