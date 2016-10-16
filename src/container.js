@@ -1,7 +1,8 @@
 import { respondToGuess } from './actions';
+import { ASKING } from './gameStates';
 
-const HIGHER_LABEL = 'higher';
-const LOWER_LABEL = 'lower';
+const HIGHER_LABEL = 'higher than ';
+const LOWER_LABEL = 'lower than ';
 
 export default function initContainer(dispatch, getState, view) {
     view.onYesClick = () => dispatch(respondToGuess(true));
@@ -9,11 +10,16 @@ export default function initContainer(dispatch, getState, view) {
 
     return function update() {
         console.log(JSON.stringify(getState(), null, 4));
-        const { currentGuess, guessesRemaining } = getState();
+        const { currentGuess, guessesRemaining, gameState } = getState();
         const { number, isHigher } = currentGuess;
 
         view.guessesRemaining = guessesRemaining;
-        view.modifier = isHigher ? HIGHER_LABEL : LOWER_LABEL;
         view.currentGuess = number;
+
+        if (gameState === ASKING) {
+            view.modifier = isHigher ? HIGHER_LABEL : LOWER_LABEL;
+        } else {
+            view.modifier = '';
+        }
     };
 }

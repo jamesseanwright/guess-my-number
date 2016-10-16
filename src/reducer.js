@@ -1,9 +1,11 @@
 import { RESPOND_TO_GUESS } from './actions';
+import { ASKING, GUESSING } from './gameStates';
 
 const MIN_NUMBER = 0;
 const MAX_NUMBER = 100;
 
 const initialState = {
+    gameState: ASKING,
     minNumber: MIN_NUMBER,
     maxNumber: MAX_NUMBER,
     guessesRemaining: Math.ceil(Math.log2(MAX_NUMBER - MIN_NUMBER)) + 1,
@@ -40,16 +42,19 @@ function getMaxNumber(isCorrectGuess, state) {
 export default function reducer(state = initialState, action) {
     let minNumber;
     let maxNumber;
+    let guessesRemaining;
 
     switch (action.type) {
         case RESPOND_TO_GUESS:
             minNumber = getMinNumber(action.isCorrectGuess, state);
             maxNumber = getMaxNumber(action.isCorrectGuess, state);
+            guessesRemaining = state.guessesRemaining - 1;
 
             return Object.assign({
+                gameState: minNumber === maxNumber || !guessesRemaining ? GUESSING : ASKING,
                 minNumber,
                 maxNumber,
-                guessesRemaining: state.guessesRemaining - 1,
+                guessesRemaining,
                 currentGuess: computeCurrentGuess(minNumber, maxNumber)
             });
 
