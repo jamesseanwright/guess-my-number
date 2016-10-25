@@ -49,7 +49,7 @@ function getMaxNumber(isCorrectGuess, state) {
     let number = maxNumber;
 
     if (isExclusiveUpdate) {
-        number = currentGuess.number + 1;
+        number = currentGuess.number - 1;
     } else if (isInclusiveUpdate) {
         number = currentGuess.number;
     }
