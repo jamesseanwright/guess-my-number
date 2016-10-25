@@ -27,16 +27,34 @@ function computeCurrentGuess(min, max) {
 
 function getMinNumber(isCorrectGuess, state) {
     const { currentGuess, minNumber } = state;
-    const shouldUpdate = isCorrectGuess && currentGuess.isHigher || !isCorrectGuess && !currentGuess.isHigher;
+    const isExclusiveUpdate = isCorrectGuess && currentGuess.isHigher
+    const isInclusiveUpdate = !isCorrectGuess && !currentGuess.isHigher;
 
-    return shouldUpdate ? currentGuess.number + 1 : minNumber;
+    let number = minNumber;
+
+    if (isExclusiveUpdate) {
+        number = currentGuess.number + 1;
+    } else if (isInclusiveUpdate) {
+        number = currentGuess.number;
+    }
+
+    return number;
 }
 
 function getMaxNumber(isCorrectGuess, state) {
     const { currentGuess, maxNumber } = state;
-    const shouldUpdate = isCorrectGuess && !currentGuess.isHigher || !isCorrectGuess && currentGuess.isHigher;
+    const isExclusiveUpdate = isCorrectGuess && !currentGuess.isHigher;
+    const isInclusiveUpdate = !isCorrectGuess && currentGuess.isHigher;
 
-    return shouldUpdate ? currentGuess.number - 1 : maxNumber;
+    let number = maxNumber;
+
+    if (isExclusiveUpdate) {
+        number = currentGuess.number + 1;
+    } else if (isInclusiveUpdate) {
+        number = currentGuess.number;
+    }
+
+    return number;
 }
 
 export default function reducer(state = initialState, action) {
