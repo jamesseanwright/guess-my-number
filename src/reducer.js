@@ -3,6 +3,8 @@ import { ASKING, GUESSING } from './gameStates';
 
 const MIN_NUMBER = 0;
 const MAX_NUMBER = 100;
+const MIN_TYPE = 'min';
+const MAX_TYPE = 'max';
 
 const initialState = {
     gameState: ASKING,
@@ -25,36 +27,21 @@ function computeCurrentGuess(min, max) {
     };
 }
 
-function getMinNumber(isCorrectGuess, state) {
-    const { currentGuess, minNumber } = state;
-    const isExclusiveUpdate = isCorrectGuess && currentGuess.isHigher
-    const isInclusiveUpdate = !isCorrectGuess && !currentGuess.isHigher;
+function getNumber(currentGuess, number, isCorrectGuess, type) {
+    const shouldApplyModifier = type === MIN_TYPE ? currentGuess.isHigher : !currentGuess.isHigher;
+    const isExclusiveUpdate = isCorrectGuess && shouldApplyModifier;
+    const isInclusiveUpdate = !isCorrectGuess && !shouldApplyModifier;
+    const exclusiveModifier = type === MIN_TYPE ? 1 : -1;
 
-    let number = minNumber;
-
-    if (isExclusiveUpdate) {
-        number = currentGuess.number + 1;
-    } else if (isInclusiveUpdate) {
-        number = currentGuess.number;
-    }
-
-    return number;
-}
-
-function getMaxNumber(isCorrectGuess, state) {
-    const { currentGuess, maxNumber } = state;
-    const isExclusiveUpdate = isCorrectGuess && !currentGuess.isHigher;
-    const isInclusiveUpdate = !isCorrectGuess && currentGuess.isHigher;
-
-    let number = maxNumber;
+    let updatedNumber = number;
 
     if (isExclusiveUpdate) {
-        number = currentGuess.number - 1;
+        updatedNumber = currentGuess.number + exclusiveModifier;
     } else if (isInclusiveUpdate) {
-        number = currentGuess.number;
+        updatedNumber = currentGuess.number;
     }
 
-    return number;
+    return updatedNumber;
 }
 
 export default function reducer(state = initialState, action) {
@@ -64,8 +51,8 @@ export default function reducer(state = initialState, action) {
 
     switch (action.type) {
         case RESPOND_TO_GUESS:
-            minNumber = getMinNumber(action.isCorrectGuess, state);
-            maxNumber = getMaxNumber(action.isCorrectGuess, state);
+            minNumber = getNumber(state.currentGuess, state.minNumber, action.isCorrectGuess, MIN_TYPE);
+            maxNumber = getNumber(state.currentGuess, state.maxNumber, action.isCorrectGuess, MAX_TYPE);
             guessesRemaining = state.guessesRemaining - 1;
 
             return Object.assign({
