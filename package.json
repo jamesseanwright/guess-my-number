@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "mkdir -p dist && cp src/index.html dist && NODE_ENV=development rollup --config rollup.js --watch",
-    "build": "NODE_ENV=production rollup --config rollup.js src/index.js && cp src/index.html dist",
-    "test": "mocha"
+    "build": "NODE_ENV=production rollup --config rollup.js && cp src/index.html dist",
+    "test": "NODE_ENV=production rollup --config rollup-test.js && mocha dist/tests.js"
   },
   "repository": {
     "type": "git",

@@ -3,8 +3,6 @@ import { ASKING, GUESSING } from './gameStates';
 
 const MIN_NUMBER = 0;
 const MAX_NUMBER = 100;
-const MIN_TYPE = 'min';
-const MAX_TYPE = 'max';
 
 const initialState = {
     gameState: ASKING,
@@ -27,21 +25,19 @@ function computeCurrentGuess(min, max) {
     };
 }
 
-function getNumber(currentGuess, number, isCorrectGuess, type) {
-    const shouldApplyModifier = type === MIN_TYPE ? currentGuess.isHigher : !currentGuess.isHigher;
+export function getNumber(currentGuess, isCorrectGuess, isMinUpdate) {
+    const shouldApplyModifier = isMinUpdate ? currentGuess.isHigher : !currentGuess.isHigher;
     const isExclusiveUpdate = isCorrectGuess && shouldApplyModifier;
     const isInclusiveUpdate = !isCorrectGuess && !shouldApplyModifier;
-    const exclusiveModifier = type === MIN_TYPE ? 1 : -1;
-
-    let updatedNumber = number;
+    const exclusiveModifier = isMinUpdate ? 1 : -1;
 
     if (isExclusiveUpdate) {
-        updatedNumber = currentGuess.number + exclusiveModifier;
+        return currentGuess.number + exclusiveModifier;
     } else if (isInclusiveUpdate) {
-        updatedNumber = currentGuess.number;
+        return currentGuess.number;
     }
 
-    return updatedNumber;
+    return null;
 }
 
 export default function reducer(state = initialState, action) {
@@ -51,8 +47,8 @@ export default function reducer(state = initialState, action) {
 
     switch (action.type) {
         case RESPOND_TO_GUESS:
-            minNumber = getNumber(state.currentGuess, state.minNumber, action.isCorrectGuess, MIN_TYPE);
-            maxNumber = getNumber(state.currentGuess, state.maxNumber, action.isCorrectGuess, MAX_TYPE);
+            minNumber = getNumber(state.currentGuess, action.isCorrectGuess, true) || state.minNumber;
+            maxNumber = getNumber(state.currentGuess, action.isCorrectGuess) || state.maxNumber;
             guessesRemaining = state.guessesRemaining - 1;
 
             return Object.assign({
